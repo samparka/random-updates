@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登录界面 欢迎登录</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/public.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/index.css" />
+    <style type="text/css">
+        #login1{
+            padding-top: 100px;
+            left:35%;
+            /*position: absolute;*/
+        }
+        .container {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+         margin-left: auto;
+        }
+        .form-group {
+        margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header_wrap">
+        <div id="header" class="auto">
+            <div class="logo">CQIEBBS<span style="font-size: 10px"> by PHP</span></div>
+            <div class="nav">
+                <a class="hover" href="../index.php">首页</a>
+                <a class="hover" href="list_hot.php">热帖</a>
+                <a class="hover" href="list.php">看帖</a>
+                <a class="hover" href="publish.php">发帖</a>
+            </div>
+            <div class="serarch">
+                <form>
+                    <input class="keyword" type="text" name="keyword" placeholder="输入搜索内容" />
+                    <input class="submit" type="submit" name="submit" value="" />
+                </form>
+            </div>
+            <div class="login" style="width: 300px;">
+
+                <!--    用户信息登录判断 -->
+                  <?php  
+                    if(isset($_SESSION['USER'])) {
+                    $arr = $_SESSION['USER'];
+                        echo '<a href="userinfo.php">&nbsp;用户' . ' ' .$arr["user_name"]. '</a>' . '&nbsp;<img style="width:32px;height: 32px;" src="../uploads/images/default.jpg"/>' . '' . ' ' . '<a href="logout.php?page=index">注销</a>';
+                  }else {
+                        echo '<a href="login.php">&nbsp;' . '登录' . '</a>' . ' ' . '<a href="register.php">注册</a>&nbsp;';
+                } 
+                   ?> 
+                
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:55px;"></div>
+    <div class="container container-small" id="login1">
+    <h1>个人信息
+    </h1>
+        <div class="form-group">
+            <label>用户名</label>
+            <span><?php echo $arr["user_name"];?></span>
+        </div>
+        <div class="form-group">
+            <label>头像</label><span><img style="width:100px;height: 100px;" src="../uploads/images/default.jpg"/></span>
+        </div>
+        <div class="form-group">
+            <a href="forgp.php">修改密码</a>
+        </div>
+</div>
+<?php include_once("footer.php");?>

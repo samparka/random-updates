@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>重工BBS</title>
+	<meta name="keywords" content="关键字列表" />
+	<meta name="description" content="网页描述" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/public.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/register.css" />
+	<style type="text/css"></style>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="header_wrap">
+		<div id="header" class="auto">
+			<div class="logo">CQIEBBS<span style="font-size: 10px"> by PHP</span></div>
+			<div class="nav">
+				<a class="hover" href="../index.php">首页</a>
+				<a class="hover" href="list_hot.php">热帖</a>
+				<a class="hover" href="list.php">看帖</a>
+				<a class="hover" href="publish.php">发帖</a>
+			</div>
+			<div class="serarch">
+				<form>
+					<input class="keyword" type="text" name="keyword" placeholder="输入搜索内容" />
+					<input class="submit" type="submit" name="submit" value="" />
+				</form>
+			</div>
+			<div class="login" style="cursor: pointer;">
+				&nbsp;<a href="./login.php">登录</a>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:55px;"></div>
+	<div id="register" class="auto">
+		<h2>欢迎注册重工BBS</h2>
+		<form action='./register_deal.php' method= "POST" >
+			<label>用户名：<input type="text" name='user_name' /><span>*3-16位，请使用英文字母、数字</span></label>
+			<label>密码：<input type="password" name='user_password1' /><span>*6-16位，请使用英文字母、数字，注意区分大小写</span></label>
+			<label>确认密码：<input type="password" name='user_password2' /><span>*两次输入的密码必须一致</span></label>
+			<div style="clear:both;"></div>
+			<input class="btn" type="submit" value="确定注册" />
+		</form>
+	</div>
+<?php include_once("footer.php");?>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<?php
+ // 将页面设置为中国时区
+ date_default_timezone_set('PRC');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>重工BBS</title>
+	<meta name="keywords" content="关键字列表" />
+	<meta name="description" content="网页描述" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/public.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/list.css" />
+	<style type="text/css"></style>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="header_wrap">
+		<div id="header" class="auto">
+			<div class="logo">CQIEBBS<span style="font-size: 10px"> by PHP</span></div>
+			<div class="nav">
+				<a class="hover" href="../index.php">首页</a>
+				<a class="hover" href="list_hot.php">热帖</a>
+				<a class="hover" href="list.php">看帖</a>
+				<a class="hover" href="publish.php">发帖</a>
+			</div>
+			<div class="serarch">
+				<form>
+					<input class="keyword" type="text" name="keyword" placeholder="输入搜索内容" />
+					<input class="submit" type="submit" name="submit" value="" />
+				</form>
+			</div>
+			<div class="login" style="width: 300px;">
+
+				<!-- 	用户信息登录判断 -->
+				 <?php  
+				  	if(isset($_SESSION['USER'])) {
+				  	$arr = $_SESSION['USER'];
+				  		echo '<a href="userinfo.php">&nbsp;用户' . ' ' .$arr["user_name"]. '</a>' . '&nbsp;<img style="width:32px;height: 32px;" src="../uploads/images/default.jpg"/>' . '' . ' ' . '<a href="logout.php?page=index">注销</a>';
+				  }else {
+				  	    echo '<a href="login.php">&nbsp;' . '登录' . '</a>' . ' ' . '<a href="register.php">注册</a>&nbsp;';
+				} 
+				   ?> 
+				
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:55px;"></div>
+	<div id="position" class="auto">
+		 <a>首页</a> &gt; <a>热帖</a>
+	</div>
+	<div id="main" class="auto">
+		<div id="left">
+			<div class="box_wrap">
+				<h3>高校</h3>
+				<div class="num">
+				  <div class="moderator">重庆工程学院</div>
+				</div>
+				<div class="pages_wrap">
+					<a class="btn publish" href="./publish.php"></a>
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+			<ul class="postsList">
+				
+				<!-- 发帖内容展示  php动态数据循环 li-->
+			<?php while( $row = $result->fetch_assoc() ) : ?>
+
+				<li>
+					<div class="smallPic">
+						<a href="#">
+							<img width="45" height="45" src="../uploads/images/default.jpg">
+						</a>
+					</div>
+					<div class="subject">
+						<div class="titleWrap"><a href="#">[标题]</a>&nbsp;&nbsp;<h2><a href="./showlist.php?pub_id=<?php echo $row['pub_id']; ?>"><?php echo $row['pub_title']; ?></a></h2></div>
+						<p>
+							楼主：<?php echo $row['pub_owner']; ?>&nbsp;<?php echo date("Y-m-d H:i:s",$row['pub_time'] ); ?>
+						</p>
+					</div>
+					<div class="count">
+						
+						<p>
+							回复<br /><span><?php
+								    $pub_id = $row['pub_id'];
+									$sqls = "select count(*) as sum from reply where rep_pub_id=$pub_id";
+									$results = $conn->query($sqls);
+									$row_num = $results->fetch_assoc(); 
+									$rowCount = $row_num['sum']; 
+									echo $rowCount; ?></span>
+						</p>
+						<p style="color: red;">
+							热度<br /><span>
+								<?php 
+									echo $row['pub_hits']*100;
+								?>
+								</span>
+						</p>
+					</div>
+					<div style="clear:both;"></div>
+				</li>
+			<?php endWhile; ?>
+
+
+			</ul>
+			<div class="pages_wrap">
+				<div class="pages">
+					<?php echo $strPage; ?>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+		<div id="right">
+			<div class="classList">
+				<div class="title">重工论坛</div>
+				<ul class="listWrap">
+					<li>
+						<h2><a href="#">高校</a></h2>
+						<ul>
+							<li><h3><a href="#">重庆大学</a></h3></li>
+							<li><h3><a href="#">重庆工商大学</a></h3></li>
+							<li><h3><a href="#">重庆工程学院</a></h3></li>
+						</ul>
+					</li>
+					<li>
+						<h2><a href="#">重庆</a></h2>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+<?php include_once("footer.php");?>
+</body>
+</html>

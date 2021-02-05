@@ -1,0 +1,126 @@
+<?php
+ session_start();
+ // 将页面设置为中国时区
+ date_default_timezone_set('PRC');
+?>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>重工BBS</title>
+	<meta name="keywords" content="关键字列表" />
+	<meta name="description" content="网页描述" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/public.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo '.' . DIR_PUBLIC;?>/css/show.css" />
+	<style type="text/css"></style>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="header_wrap">
+		<div id="header" class="auto">
+			<div class="logo">重工BBS<span style="font-size: 10px"> by PHP</span></div>
+			<div class="nav">
+				<a class="hover" href="../index.php">首页</a>
+				<a class="hover" href="list_hot.php">热帖</a>
+				<a class="hover" href="list.php">看帖</a>
+				<a class="hover" href="publish.php">发帖</a>
+			</div>
+			<div class="serarch">
+				<form>
+					<input class="keyword" type="text" name="keyword" placeholder="输入搜索内容" />
+					<input class="submit" type="submit" name="submit" value="" />
+				</form>
+			</div>
+			<div class="login" style="width: 300px;">
+				
+				<!-- 	用户信息登录判断 -->
+				   <?php  
+				  	if(isset($_SESSION['USER'])) {
+				  	$arr = $_SESSION['USER'];
+				  		echo '<a href="userinfo.php">&nbsp;用户' . ' ' .$arr["user_name"]. '</a>' . '&nbsp;<img style="width:32px;height: 32px;" src="../uploads/images/default.jpg"/>' . '' . ' ' . '<a href="logout.php?page=index">注销</a>';
+				  }else {
+				  	    echo '<a href="login.php">&nbsp;' . '登录' . '</a>' . ' ' . '<a href="register.php">注册</a>&nbsp;';
+				} 
+				   ?> 
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:55px;"></div>
+	<div id="position" class="auto">
+		 <a>首页</a> &gt; <a href="./list.php">返回上一级</a> 
+	</div>
+	<div id="main" class="auto">
+		<div class="wrap1">
+			<a class="btn reply" href="./reply.php?pub_id=<?php echo $row['pub_id']; ?>"></a>
+			<div style="clear:both;"></div>
+		</div>	
+		<?php if($pageN == 1) : ?>
+		<div class="wrapContent">
+			<div class="left">
+				<div class="face">
+					<a target="_blank" href="">
+						<img src="../uploads/images/df_head.jpg" />
+					</a>
+				</div>
+				<div class="name">
+					<a href=""><?php echo $row['pub_owner']; ?></a>
+				</div>
+			</div>
+			<div class="right">
+				<div class="title">
+					<h2><?php echo $row['pub_title']; ?></h2>
+					<span>热度：<?php echo $h=$row['pub_hits']*100; ?>&nbsp;|&nbsp;<span>阅读：<?php echo $row['pub_hits']; ?>&nbsp;|&nbsp;回复：<?php echo $rowCount ?></span>
+					<div style="clear:both;"></div>
+				</div>
+				<div class="pubdate">
+					<span class="date">发布于：<?php echo date('Y-m-d H:i:s', $row['pub_time']); ?> </span>
+					<span class="floor" style="color:red;font-size:14px;font-weight:bold;">楼主</span>
+				</div>
+				<div class="content">
+					 <?php echo $row['pub_content']; ?>
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<?php endIf; ?>
+
+		<?php $i=5*$pageN-4;while($rep_row = $rep_result->fetch_assoc() ) : ?>
+		<div class="wrapContent">
+			<div class="left">
+				<div class="face">
+					<a target="_blank" href="">
+						<img src="../uploads/images/df_head.jpg" />
+					</a>
+				</div>
+				<div class="name">
+					<a href=""><?php echo $rep_row['rep_user']; ?></a>
+				</div>
+			</div>
+			<div class="right">
+				
+				<div class="pubdate">
+					<span class="date">回复时间：<?php echo date('Y-m-d H:i:s', $rep_row['rep_time']); ?></span>
+					<span class="floor"><?php echo $i++;?>楼&nbsp;|&nbsp;<a href="del.php?rep_id=<?php echo $rep_row['rep_id'];?>&pub_id=<?php echo $rep_row['rep_pub_id'];?>">删除</a></span>
+				</div>
+				<div class="content">
+					<?php echo $rep_row['rep_content']; ?>
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<?php endWhile; ?>
+		<div class="wrap1">
+			<div class="pages" style="margin: 0 auto;">
+				<?php echo $strPage; ?>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	<?php include_once("footer.php");?>
+</body>
+</html>
+
+
