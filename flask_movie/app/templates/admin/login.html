@@ -1,0 +1,23 @@
+{% extends 'auth/form_base.html' %}
+
+{% block form %}
+<div class="container">
+    <form class="form-signin" action="{{ url_for('admin.login_view') }}"
+          method="POST">
+        {{ form.hidden_tag() }}
+        <h1 class="form-signin-heading text-center">后台登录</h1>
+        <hr>
+        {{ form.name.label(for='inputName', class='sr-only') }}
+        {{ form.name(class='form-control', id='inputName', placeholder="管理员账户", required=True) }}
+        {{ form.password.label(for='inputPassword', class='sr-only') }}
+        {{ form.password(type='password', id='inputPassword', class='form-control', placeholder='密码', required=True) }}
+        <div class="checkbox">
+            <p>
+                忘记密码? <a href="{{ url_for('admin.password_reset_request') }}">点此重置密码</a>
+            </p>
+        </div>
+        {{ form.login(class='btn btn-lg btn-primary btn-block', type='submit') }}
+    </form>
+
+</div>
+{% endblock %}
