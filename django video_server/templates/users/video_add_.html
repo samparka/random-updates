@@ -1,0 +1,70 @@
+{#  {% extends 'base/base.html' %}#}
+{% load static %}
+{% block content %}
+    <title>视频上传</title>
+<link rel="stylesheet" type="text/css" href="{% static 'SemanticUI/semantic.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/semantic.custom.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<body id="v-account-body">
+<div class="ui middle aligned center aligned grid">
+    <div class="column v-account">
+        <h2 class="ui teal image header">
+            <img src="{% static 'img/logo.png' %}" class="image">
+            <div class="content">
+                视频上传
+            </div>
+        </h2>
+            {% csrf_token %}
+<label id="progress_label" for="chunked_upload" class="ui fluid large teal button">
+        <i class="cloud upload icon"></i>选择文件
+        <input id="chunked_upload" type="file" name="the_file" hidden>
+</label>
+        <div id="progress_layout" class="n">
+                <div class="ui progress" data-percent="74" id="upload_progress">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="label" id="upload_label">正在上传...</div>
+                </div>
+            </div>
+
+            <div id="next_layout" class="n">
+                <button id="next" class="ui primary right labeled icon button">
+                  <i class="right arrow icon"></i>
+                  下一步
+                </button>
+
+            </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+    {% block javascript %}
+
+<script>
+var api_chunked_uplad = "{% url 'myadmin:api_chunked_upload' %}";
+var api_chunked_upload_complete = "{% url 'myadmin:api_chunked_upload_complete' %}";
+
+{# 修改chunked_upload 接口，编写video_publish页面#}
+
+</script>
+
+<script src="{% static 'js/upload/jquery.js' %}"></script>
+<script src="{% static 'js/upload/jquery.ui.widget.js' %}"></script>
+<script src="{% static 'js/upload/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'js/upload/jquery.fileupload.js' %}"></script>
+<script src="{% static 'js/upload/spark-md5.js' %}"></script>
+<script src="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="{% static 'js/myadmin/video_upload.js' %}"></script>
+
+{% endblock javascript %}
+
+
+
+
+
+{% endblock content %}
